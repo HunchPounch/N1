@@ -37,7 +37,12 @@ void CListParse::GoToBegin(){
 void CListParse::GoToEnd(){
     this->cur = this->End;
 }
-
+/////////////////////////////////////
+/////////////////////////////////////////////////
+////////////////////////////////////////////////////
+///
+//
+ //   /    /         /  ////////////
 void CListParse::CopyOnly(CListParse &b){
     char name[256];
     char meaning[256];
@@ -45,8 +50,14 @@ void CListParse::CopyOnly(CListParse &b){
         b.GoToBegin();
         do{
             b.GetCur(name, meaning);
-            this->GoToEnd();
-            this->AddAfter(name, meaning);
+            if(this->SearchName(name)==0){
+                this->GoToEnd();
+                this->AddAfter(name, meaning);
+            }
+            if(this->SearchName(name)!=0 && strcmp(this->cur->meaning, meaning)==0){
+                ////
+            }
+
         }
         while(b.GoToNext()==0);
     }
