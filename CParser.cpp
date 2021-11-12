@@ -211,6 +211,7 @@ CParser::CParser(const char file_name[256]){
     int NumOfString = 1;
     int check =-1;
     int CHECK = -1;
+    int Normal = 0;
     char buffer[256] = "&";
     char FirstTemplate[256] = "";
     char SecondTemplate[256] = "";
@@ -234,6 +235,7 @@ CParser::CParser(const char file_name[256]){
     for(int k=0; buffer[i] != ' '; i++, k++){
         if(buffer[i]== '#' || buffer[i] == '\0'){
             cout << "incorrect input in " << NumOfString <<"st line" << endl;
+            Normal++;
             NumOfString++;
             CHECK = 1;
             break;
@@ -249,6 +251,7 @@ CParser::CParser(const char file_name[256]){
 
     if(buffer[0] == '&'){
         cout << "The "<< NumOfString <<"st line in file is empty" << endl;
+        Normal++;
         NumOfString++;
         continue;
     }
@@ -258,21 +261,14 @@ CParser::CParser(const char file_name[256]){
 
     if(buffer[i-1] == '\0' || buffer[i] == '\0' || buffer[i-2] == '\0'){
         cout << "incorrect input in " << NumOfString <<"st line" << endl;
+        Normal++;
         NumOfString++;
         continue;
     }
-    if(buffer[i-1] != ' '){
+
+    if(buffer[i] == ' ' || buffer[i] == '#' || buffer[i-1] != ' '){
         cout << "incorrect input in " << NumOfString <<"st line" << endl;
-        NumOfString++;
-        continue;
-    }
-    if(buffer[i] == '#'){
-        cout << "incorrect input in " << NumOfString <<"st line" << endl;
-        NumOfString++;
-        continue;
-    }
-    if(buffer[i] == ' '){
-        cout << "incorrect input in " << NumOfString <<"st line" << endl;
+        Normal++;
         NumOfString++;
         continue;
     }
@@ -295,12 +291,12 @@ CParser::CParser(const char file_name[256]){
         }
         else{
             cout << "incorrect input in " << NumOfString <<"st line" << endl;
+            Normal++;
             NumOfString++;
             continue;
         }
 
     }
-
         if(FileInClass.SearchName(FirstTemplate)==0){
             FileInClass.AddAfter(FirstTemplate, SecondTemplate);
         }
@@ -310,7 +306,12 @@ CParser::CParser(const char file_name[256]){
 
     NumOfString++;
     }
-
+    if(Normal== 0){
+        cout << "The file was read without errors" << endl;
+    }
+    if(Normal != 0){
+        cout << "The are " << Normal << " errors in file on lines" << endl;
+    }
     fin.close();
 }
 
