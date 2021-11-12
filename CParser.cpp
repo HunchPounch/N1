@@ -54,8 +54,8 @@ void CListParse::CopyOnly(CListParse &b){
                 this->GoToEnd();
                 this->AddAfter(name, meaning);
             }
-            if(this->SearchName(name)!=0 && strcmp(this->cur->meaning, meaning)==0){
-                ////
+            else{
+                cout << "The name " << name << " has already appeared in the files" << endl;
             }
 
         }
@@ -300,7 +300,13 @@ CParser::CParser(const char file_name[256]){
         }
 
     }
-    FileInClass.AddAfter(FirstTemplate, SecondTemplate);
+
+        if(FileInClass.SearchName(FirstTemplate)==0){
+            FileInClass.AddAfter(FirstTemplate, SecondTemplate);
+        }
+        else{
+            cout << "The name " << FirstTemplate << " has already appeared in the files" << endl;
+        }
 
     NumOfString++;
     }
